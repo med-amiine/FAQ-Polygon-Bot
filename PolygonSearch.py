@@ -3,6 +3,9 @@
 import requests
 import json
 
+res = []
+my_dict = {}
+
 class PolygonSearch:
     
   def __init__(self,api_endpoint,agent,application_id,api_key,index_name):
@@ -35,19 +38,14 @@ class PolygonSearch:
     test = json.loads(pastebin_url)
    
     results = test["results"][0]["hits"]
-
-    res = []
-    my_dict = {}
     
     for x in results:
-      p= x["url"]
-      c = x["hierarchy"]["lvl0"]
-      my_dict['url']= p
-      my_dict["titre"] = c
+      my_dict['url']= x["url"]
+      my_dict["titre"] = x["hierarchy"]["lvl0"]
       res.append(my_dict.copy())
     return res
 
-def enhance_result():
+def enhance_result(res):
   # to be added later
   print("cleanning the result...")
 
@@ -60,10 +58,4 @@ def enhance_result():
 
 
 
-     # self.search_keyword = search_keyword
-
-  
-  # # defining the api-endpoint 
-  # API_ENDPOINT = "https://bh4d9od16a-dsn.algolia.net/1/indexes/*/queries"
-
-  # params = {'x-algolia-agent': 'Algolia%20for%20JavaScript%20(3.35.1)%3B%20Browser%20(lite)%3B%20docsearch.js%202.6.3', 'x-algolia-application-id': 'BH4D9OD16A', 'x-algolia-api-key': 'c3ad4eabc5af314ea3ed331efbe0a5c4'}
+     
