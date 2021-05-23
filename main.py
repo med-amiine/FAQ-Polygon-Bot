@@ -39,8 +39,13 @@ def get_answer_doc(message,results_number):
 
 def get_answer_discord(message,results_number):
   discord_result = polygon_discord_search.perform_serach(message,results_number)
-  answer = discord_result[1]
-  author = discord_result[0]
+  if (discord_result):
+    answer = discord_result[1]
+    author = discord_result[0]
+  else:
+    answer = "No that is not possible. If you can tell me more about your use case, then probably we can suggest a good solution for it."
+    author = "PolySearch Bot"
+    return answer,author
   # print(queries)
  
   return answer,author
@@ -60,12 +65,13 @@ async def on_message(message):
   if (msg.startswith('question') or msg.endswith('?') ):
     title,link = get_answer_doc(msg,5)
     # answer,author = get_answer_discord(msg,5)
-    await message.channel.send("Hi i'm a Polysearch you asked " + msg)
+    await message.channel.send("Hi i'm a Polysearch you asked, {} ".format(msg))
     await message.channel.send("useful link DYOR:")
     for i in range(3):
       await message.channel.send(str(title[i]) + ": " + str(link[i]) + "\n")
-    # for i in range(5):
-    # await message.channel.send("Another answer from " + str(author[0]) + ": " + str(answer[0]) )
+  # elif (msg.startswith('discord') and msg.endswith('??')):
+    # for i in range(3):
+    #   await message.channel.send("Another answer from " + str(author[0]) + ": " + str(answer[0]) )
     
 
 
